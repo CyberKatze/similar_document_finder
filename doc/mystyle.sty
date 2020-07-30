@@ -1,0 +1,202 @@
+\ProvidesPackage{mystyle}[]
+\RequirePackage{graphicx}
+\RequirePackage[utf8]{inputenc}
+\RequirePackage{listings}
+\RequirePackage[x11names, svgnames, rgb]{xcolor}
+\RequirePackage{inputenc}
+\RequirePackage{import}
+\RequirePackage[hidelinks]{hyperref}
+\RequirePackage{fancyhdr}
+\RequirePackage{pgfplots}
+\RequirePackage{pgf}
+\RequirePackage{amssymb}
+\RequirePackage{sectsty}
+\RequirePackage{mdframed}
+\RequirePackage{syntax}
+\RequirePackage{subfig}
+\RequirePackage{geometry} 
+\RequirePackage{tikz} 
+\RequirePackage{graphicx}
+\RequirePackage{float}
+\RequirePackage{amsmath}
+\RequirePackage{booktabs}
+\RequirePackage[T1]{fontenc}
+\RequirePackage[font=small]{caption}
+
+\usetikzlibrary{snakes, arrows, shapes} 
+\pgfplotsset{compat=1.16}
+
+%New colors defined below
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{darkgreen}{rgb}{0.0, 0.4, 0.13}
+\definecolor{codegray}{rgb}{0.2,0.2,0.2}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.93,0.92,0.93}
+\definecolor{deepblue}{rgb}{0.3,0.4,0.5}
+\sectionfont{\color{deepblue}}
+
+\geometry{
+	paper=a4paper, % Paper size, change to letterpaper for US letter size
+	top=2.5cm, % Top margin
+	bottom=3cm, % Bottom margin
+	left=2.5cm, % Left margin
+	right=2.5cm, % Right margin
+	headheight=1.5cm, % Header height
+	footskip=1.5cm, % Space from the bottom margin to the baseline of the footer
+	headsep=0.75cm, % Space from the top margin to the baseline of the header
+	%showframe, % Uncomment to show how the type block is set on the page
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Header
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\includegraphics[height=1.3cm]{images/Bu_Ali_Sina_University.png}}
+\lhead{\@title}
+\cfoot{\thepage}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Header
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Title page customization
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand*{\project}[1]{\gdef\@project{#1}%
+}
+\newcommand*{\@project}{Final Year Project}
+
+\newcommand*{\titleextra}[1]{\gdef\@titleextra{#1}%
+}
+\newcommand*{\@titleextra}{}
+
+\newcommand*{\authortwo}[1]{\gdef\@authortwo{#1}%
+}
+\newcommand*{\@authortwo}{}
+\newcommand*{\logo}[1]{\gdef\@logo{#1}%
+}
+\newcommand*{\@logo}{logo}
+\newcommand*{\supervisor}[1]{\gdef\@supervisor{#1}%
+}
+\newcommand*{\@supervisor}{\texttt{\string\supervisor} currently
+not set. Please fix this.}
+\renewcommand*{\maketitle}{%
+\begin{titlepage}
+\centering
+{
+	\includegraphics[width=4cm]{images/Bu_Ali_Sina_University.png}\par
+}\vspace{1cm}
+	\centering
+{\scshape\LARGE Bu-Ali Sina University\par}
+\vspace{1cm}
+{\scshape\Large\@project\unskip\strut\par}
+\vspace{1.5cm}
+{\huge\bfseries\@title\unskip\strut\par}
+{\huge\bfseries\@titleextra\unskip\strut\par}
+\vspace{2cm}
+{\Large\itshape\@author\unskip\strut\par}
+{\Large\itshape\@authortwo\unskip\strut\par}
+\vfill
+supervised by\par
+\@supervisor\unskip\strut\par
+
+\vfill
+
+{\large \@date\par}
+\end{titlepage}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Title page customization
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%listings style
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Code listing style named "mystyle"
+\lstdefinestyle{mystyle}{
+    commentstyle=\color{codegreen},
+  keywordstyle=\color{magenta},
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{codepurple},
+  basicstyle=\ttfamily\footnotesize,
+  breakatwhitespace=false,         
+  breaklines=true,          
+  xleftmargin=0.7cm,
+  frame=tlbr,  
+  framesep=0.2cm, 
+  framerule=0pt,    
+  captionpos=b,                    
+  keepspaces=true,                 
+  showspaces=false,                
+  showstringspaces=false,
+  showtabs=false,                  
+  tabsize=2
+}
+\lstdefinestyle{ANTLR}{
+  style=mystyle,
+  language=C,
+  numbers=left,
+emph={%
+        parser,grammar,options,lexer,fragment,skip%                                            literal strings listed here
+        },emphstyle={\color{deepblue}\ttfamily},%              and formatted in blue
+    alsoletter={->,*,?,:,|,;},%
+    morekeywords={->,*,?,:,|,;},%  
+%"mystyle" code listing set
+}
+\newcommand\pythonstyle{\lstset{
+style=mystyle,
+language=Python,
+numbers=left,
+otherkeywords={self},             % Add keywords here
+emph={MyClass,__init__,add,ignore,build,LexerGenerator,np, plt,
+nx,DOTLexer,DOTParser, antlr4,GraphDOTListener,networkx,matplotlib,pyplot,sys},          % Custom highlighting
+emphstyle=\ttfamily\color{deepblue},    % Custom highlighting style
+}}
+
+
+% Python environment
+\lstnewenvironment{python}[1][]
+{
+\pythonstyle
+\lstset{#1}
+}
+{}
+
+% Python for external files
+\newcommand\pythonexternal[2][]{{
+\pythonstyle
+\lstinputlisting[#1]{#2}}}
+
+\lstdefinestyle{BASH}{
+  style=mystyle,
+  basicstyle = \color{white}\ttfamily,
+  otherkeywords={$},
+emph={%
+        main,py,%                                            literal strings listed here
+        },emphstyle={\color{codegreen}\ttfamily},%              and formatted in blue
+    alsoletter={->,*,?,:,|,;},%
+    morekeywords={->,*,?,:,|,;},%  
+%"mystyle" code listing set
+}
+
+% a shaded figure
+\newenvironment{fig-shaded}[2]{
+  \begin{figure}[H]
+    \caption{#1}
+    \label{#2}
+    \begin{mdframed}[linecolor=black!30,backgroundcolor=codegray]
+    
+}{
+    \end{mdframed}
+  \end{figure}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%listings style
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+

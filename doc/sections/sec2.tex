@@ -1,0 +1,39 @@
+\section{Similarity Score}
+Now that we can find the LCS, how we can say how much the documents are similar?
+One of the methods is used in statistics to estimate similarity of two sets is \textbf{Jaccard
+similarity coefficient}.
+\footnote{\href{https://en.wikipedia.org/wiki/Jaccard_index}{https://en.wikipedia.org/wiki/Jaccard_index}}
+The Jaccard index, also known as Intersection over Union and 
+the Jaccard similarity coefficient 
+(originally given the French name coefficient de 
+communauté by Paul Jaccard), is a statistic used for 
+gauging the similarity and diversity of sample sets. 
+The Jaccard coefficient measures similarity between finite 
+sample sets, and is defined as the size of the intersection 
+divided by the size of the union of the sample sets:
+
+\begin{equation}
+  \label{eq:jaccard}
+  J(A,B) = \frac{|A\cap B|}{|A \cup B|}
+\end{equation}
+
+There is only a subtlety here, in LCS we don't find the intersectons.
+So we can amend the forumla this way:
+\begin{equation}
+\label{eq:jacc2}
+  J'(A,B) = \frac{|LCS(A,B)|}{|A|+ |B|-|LCS(A,B)| }
+\end{equation}
+\subsection{Implementing Similarity Score in Python}
+Python implementation is shown in the Listing \ref{lis:jacc}.
+\begin{python}[caption=jaccard similarity rate, label=lis:jacc]
+def sim_rate(t1, t2, lcs):
+    '''
+    t1: list of words
+    t2: list of words
+    lcs: longest common sequence of t1 and t2
+    return: similarity rate and including rate.'''
+    rate = len(lcs)/(len(t1)+len(t2)-len(lcs))
+
+    return rate
+\end{python}
+

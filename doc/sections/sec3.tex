@@ -1,0 +1,109 @@
+\section{Dependency Score}
+Other way to look at similarity is to see how much a set 
+includes elments of the other set compare to all the elements
+in the set. Let's say we have two documents and one of those is 
+subset of the other. if the second document has lots of strings compare
+to the first one. This causes low smilarity score. So we introduce another 
+score to recognize how much one document depends on other. So the score
+is defined as following:
+
+\begin{equation}
+\label{eq:inc-s}
+  S(A,B) = \frac{|LCS(A,B)|}{|A|} 
+\end{equation}
+shows the dependency of set A on set B.
+\subsection{Partial Inclusion}
+What if the documents are not the subset of each other nor similar but
+still there is some parts in them that are exactly the same. In LCS, we 
+don't care about if the similar words occurs in dense or in a sparse
+space. As an example consdier two following random texts. The colored parts
+shows the parts that are similar. As you can see if the uncolored text increase
+the Similarity and Inclusion score is going to decrease, although they have
+exactly similar parts in them. 
+
+\begin{table}[H]
+\centering
+\begin{tabular}{p{3in}p{3in}}
+  \subsubsection*{Text 1}  
+  \textbf{\textcolor{codepurple}{Both rest of know draw fond post as. 
+  It agreement defective to excellent. 
+  Feebly do engage of narrow. Extensive 
+  repulsive belonging depending if promotion 
+  be zealously as.}} Preference inquietude ask 
+  now are dispatched led appearance. Small meant 
+  in so doubt hopes. Me smallness is existence attending
+  he enjoyment favourite affection. Delivered is to ye belonging 
+  enjoyment preferred. Astonished and acceptance men two discretion. 
+  Law education recommend did objection how old. 
+  \textbf{\textcolor{codepurple}{To sure calm much most long me mean. Able rent long in do we. 
+  Uncommonly no it announcing melancholy an in. Mirth learn it 
+  he given. Secure shy favour length all twenty denote. He felicity 
+  no an at packages answered opinions juvenile.}}
+
+    &
+    \subsubsection*{Text 2} 
+   \textbf{\textcolor{codepurple}{Both rest of know draw fond post as. 
+  It agreement defective to excellent. 
+  Feebly do engage of narrow. Extensive 
+  repulsive belonging depending if promotion 
+  be zealously as.}}Performed suspicion in certainty 
+  so frankness by attention pretended. Newspaper or 
+  in tolerably education enjoyment. Extremity excellent 
+  certainty discourse sincerity no he so resembled. Joy 
+  house worse arise total boy but. Elderly up chicken do at 
+  feeling is. Like seen drew no make fond at on rent. Behaviour 
+  extremely her explained situation yet september gentleman are who. 
+  Is thought or pointed hearing he. 
+  \textbf{\textcolor{codepurple}{To sure calm much most long me mean. Able rent long in do we. 
+  Uncommonly no it announcing melancholy an in. Mirth learn it 
+  he given. Secure shy favour length all twenty denote. He felicity 
+  no an at packages answered opinions juvenile.}}
+\end{tabular}
+\caption{Two random texts. Colored parts are similar}
+\label{tab:texts}
+\end{table}
+
+For the complexity of recognizing this part
+we are not going to define a score, and only use diagrams to gain the insight
+about the existance of this. You can see the occurance distribution graph of LCS in
+Figure \ref{fig:dist}.
+\begin{figure}[H]
+  \centering
+  \scalebox{.35}{\input{images/occurance.pgf}}
+  
+  \caption{LCS occurance distribution of texts in Table \ref{tab:texts}}
+  \label{fig:dist}
+\end{figure}
+
+\subsection{Implementing Inclusion Score in Python}
+Now let's implement the the Dependency Score using formula in the
+Equation \ref{eq:inc-s}. For the partial inclusion, the occurance
+indexes of LCS will be found to draw the the graph later in another
+part of the program. The code is shown in the Listing \ref{lis:inc}.
+\begin{python}[caption=Inclusion Score, label=lis:inc]
+def depend_score(t1, t2, lcs):
+    '''
+    t1: list of words
+    t2: list of words
+    lcs: longest common sequence of t1 and t2
+    return: return dependency rate of t1 on t2'''
+    return  len(lcs)/len(t1)
+
+
+def dist_finder(text, words):
+    '''
+    text: list of words
+    words: List of word occurances in text
+    return: index of words occurances in text'''
+    counter = 0
+    dist_list = []
+
+    for i, word in enumerate(text):
+        if len(words) == counter:
+            break
+        if words[counter] == word:
+            dist_list.append(i)
+            counter += 1
+
+    return dist_list
+\end{python}

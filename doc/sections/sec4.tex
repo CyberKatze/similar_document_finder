@@ -1,0 +1,37 @@
+\section{Execution of Similarity and Inclusion Score using LCS}
+
+In this section, we write a Python program that uses previous 
+implementations. The program is going to read two texts from 
+files that are given by system arguments through the execution 
+terminal and is going to print the Similarity and Dependency score 
+with the LCS strings. Afterward, will plot the distribution of LCS 
+occurrence in both text1 and text2. 
+
+\pythonexternal[caption=Python program using previous Implementation,label=lis:main]{codes/main1.py}
+
+The execution of the program is shown in Figure \ref{fig:exe}. \textit{text1.txt}
+and \textit{text2.txt} contains Text1 and Text2 that were shown in the
+Table \ref{tab:table1}. The plot is going to be similar to Figure \ref{fig:dist}. As
+you can see, the Similarity score of texts is 42.77\% and Inclusion score
+(the rate the smaller text depends on the bigger text) is 64.15\%.
+
+\begin{fig-shaded}{Execution of program in Listing \ref{lis:main}}{fig:exe}
+\begin{lstlisting}[style=BASH]
+$ ./main.py text1.txt text2.txt
+Similarity Score: 42.77%  
+Dependency Score of text1 on text2: 64.15%  
+Dependency Score of text2 on text1: 56.20%
+
+LCS Words:  
+Both rest of know draw fond post as. 
+It agreement defective to excellent. Feebly do engage of narrow. 
+Extensive repulsive belonging depending if promotion be zealously 
+as. so he To sure calm much most long me mean. Able rent long in 
+do we. Uncommonly no it announcingmelancholy an in. Mirth learn 
+it he given. Secureshy favour length all twenty denote. 
+He felicity noan at packages answered opinions juvenile.
+\end{lstlisting}
+\end{fig-shaded}
+If you have cloned the application’s Git repository on GitHub, you
+can run \texttt{git checkout phase\#1} to check out this version of the application.
+

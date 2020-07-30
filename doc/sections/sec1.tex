@@ -1,0 +1,112 @@
+\section{Implementing Similarity Rater Using LCS}
+The \textbf{longest common subsequence}
+\footnote{\href{https://en.wikipedia.org/wiki/Longest_common_subsequence_problem}
+{https://en.wikipedia.org/wiki/Longest_common_subsequence_problem}} 
+(LCS) problem is the 
+problem of finding the longest subsequence common 
+to all sequences in a set of sequences 
+(often just two sequences). It differs 
+from the longest common substring problem: 
+unlike substrings, subsequences are not 
+required to occupy consecutive positions within 
+the original sequences.
+For example, consider the sequences (ABCD) 
+and (ACBAD). They have 5 length-2 common 
+subsequences: (AB), (AC), (AD), (BD), and (CD); 
+2 length-3 common subsequences: (ABD) and (ACD); 
+and no longer common subsequences. So (ABD) and (ACD) 
+are their longest common subsequences.
+
+
+Let two sequences be defined as follows: 
+$ X=(x_{1}x_{2}\cdots x_{m})$
+$ X=(x_{1}x_{2}\cdots x_{m})$ and 
+$ Y=(y_{1}y_{2}\cdots y_{n})$
+$ Y=(y_{1}y_{2}\cdots y_{n})$.
+The prefixes of $X$ are 
+$X_{1,2,\dots ,m}$
+$ X_{1,2,\dots ,m}$; the prefixes of 
+$Y$ are $ Y_{1,2,\dots ,n}$
+$ Y_{1,2,\dots ,n}$. Let 
+$ {\mathit {LCS}}(X_{i},Y_{j})$
+$ {\mathit {LCS}}(X_{i},Y_{j})$
+represent the set of longest common subsequence of 
+prefixes $ X_{i}$ and $ Y_{j}$. 
+This set of sequences is given by the following.
+\begin{equation}
+\label{eq:lcs}
+LCS(X_i,Y_j)=
+\begin{cases}
+\emptyset & \text{if } i=0 \text{ or } j =0\\
+LCS(x_{i-1}, y_{j-1})^\frown x_i & \text{if } i,j>0 \text{ and } x_i = y_j\\
+max\{LCS(X_i, Y_{j-1}), LCS(X_{i-1}, Y_j)\} & \text{if } i,j>0 \text{ and } x_i \neq y_j
+\end{cases}
+\end{equation}
+
+
+\subsection{Python Implementatoin}
+Using the LCS algorithm we can find the longest common 
+sequence in the two or more strings. But applying this 
+method to long documents can be irrelevant. Because in document 
+similarity problems we mostly care how semantically those are the 
+same and finding a common sequence of characters has little to do 
+with that. Instead, we can split the documents into words and find the 
+longest common sequence of words.
+
+Now, let’s implement this in Python. The LCS function is going to 
+take two lists of strings and find LCS among those. Using a dynamic 
+programming approach and with use of tabulation we solve the LCS 
+problem.
+
+As an example, let’s  say, we have two following lists of strings. 
+$$x = [‘Hey’, ‘Mehran’, ‘how’, ‘are’, ‘you’, ‘doing’, ‘today’] $$
+$$ y = [‘Hey’, ‘Mehrdad’, ‘how’, ‘are’, ‘doing?’] $$
+
+Using recursive formula in the equation \ref{eq:lcs} and taking a 
+bottom up approach we can fill a table similar to what shown in the 
+\ref{tab:table1} and find the LCS by returning the bottom right cell
+in the table.
+\begin{table}[H]
+  \begin{center}
+    \caption{LCS of two lists. Blue colored list is the answer.}
+    \label{tab:table1}
+    \resizebox{\columnwidth}{!}{%
+    \begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+      \toprule % <-- Toprule here
+      & $\emptyset$ & \textbf{Hey} & \textbf{Mehran,} & \textbf{how} 
+      & \textbf{are} & \textbf{you} & \textbf{doning} 
+      & \textbf{today?}\\
+      \midrule % <-- Midrule here
+      $\emptyset$ & $[]$ & $[]$ & $[]$ & $[]$ & $[]$ & $[]$ & $[]$ &$[]$  \\
+      \midrule
+      \textbf{Hey} & $[]$ & \textcolor{darkgreen}{$['hey']$} &  $ \leftarrow ['hey']$ & $ \leftarrow ['hey']$ & $\leftarrow ['hey']$ & $\leftarrow ['hey']$ & $\leftarrow ['hey']$ & $ \leftarrow['hey']$ \\
+      \midrule % <-- Midrule here
+      \textbf{Mehrdad,} & $[]$ &$\uparrow ['hey']$ & $\uparrow ['hey']$ & $\uparrow ['hey']$ & $\uparrow ['hey']$ & $\uparrow ['hey']$ & $\uparrow ['hey']$ & $\uparrow ['hey']$ \\
+      \midrule % <-- Midrule here
+      \textbf{how} & $[]$ & $\uparrow ['hey']$ & $\uparrow ['hey']$ & $\textcolor{darkgreen}{['hey', 'how']}$ & $\leftarrow ['hey', 'how']$ & $\leftarrow ['hey', 'how']$ & $\leftarrow ['hey','how']$ & $\leftarrow ['hey','how']$ \\
+      \midrule % <-- Midrule here
+      \textbf{are} & $[]$ & $\uparrow ['hey']$ & $\uparrow ['hey']$ & $\uparrow ['hey', 'how']$ & $\textcolor{darkgreen}{['hey', 'how', 'are']}$ & $\leftarrow ['hey', 'how', 'are']$ & $\leftarrow['hey','how','are]$ & $\leftarrow['hey','how', 'are']$ \\
+      \midrule % <-- Midrule here
+      \textbf{doing?} & $[]$ & $\uparrow ['hey']$ & $\uparrow ['hey']$ & $\uparrow ['hey', 'how']$ & $\uparrow ['hey', 'how', 'are']$ & $\uparrow ['hey', 'how', 'are']$ & $\uparrow ['hey','how','are]$ & \textcolor{blue}{$\uparrow  ['hey','how', 'are']$} \\ 
+      \bottomrule % <-- Bottomrule here
+    \end{tabular}%
+    }
+  \end{center}
+\end{table}
+
+The code implemented in Python is shown in Listing \ref{lis:lcs}. First, the table is filled with empty
+lists. Looping through the table, strting with second row and second column
+( first row and first column initialaized with empty before)
+using similar formula as equation \ref{eq:lcs} fill the table with approporiate values.
+\textit{indx} function is used to map each index of texts with right index in
+table. Because the talble have one extra row and column to find the right index for the table we need
+to add 1 to the index of each character in the text. For convenience a \textit{lambda}
+function is written for that.
+\pythonexternal[label=lis:lcs, caption=Implementatoin of LCS in python]{codes/lcs.py}
+\subsubsection{Runtime and Memory Complexity}
+The runtime complexity of function is shown in Listing \ref{lis:lcs} is $O(m \times n)$, because
+it needs to loop through the table of size $m \times n$.
+There is subtlty in calculating Memory Complexity. In Python, lists
+only have refrences to their elements and don't store whole elements.
+And in total there is $ m \times n$ refrences in the table with number of
+LCS distinct strings refrences. That in the worst case gives $O(m \times n \times min\{n,m\})$.
