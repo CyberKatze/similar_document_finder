@@ -1,19 +1,73 @@
-# Find Similar Documents (using LCS) 
-### Phases
-- [x] Implementing LCS
-- [x] Similarity and Dependency Score
-- [ ] Scrape specific website documents and compare to a given document
-- [ ] Find similar codes to the given code in Geekforgeeks website
-- [ ] General approach of finding similar documents on Google
-### Requirement
+
+<div id="top"></div>
+<!--
+*** Thanks for checking out the Best-README-Template. If you have a suggestion
+*** that would make this better, please fork the repo and create a pull request
+*** or simply open an issue with the tag "enhancement".
+*** Don't forget to give the project a star!
+*** Thanks again! Now go create something AMAZING! :D
+-->
+
+
+
+<!-- PROJECT SHIELDS -->
+<!--
+*** I'm using markdown "reference style" links for readability.
+*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
+*** See the bottom of this document for the declaration of the reference variables
+*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
+*** https://www.markdownguide.org/basic-syntax/#reference-style-links
+-->
+<div align="center">
+  <a href="https://basu.ac.ir/">
+    <img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/49/Bu_Ali_Sina_University.svg/1200px-Bu_Ali_Sina_University.svg.png" alt="Logo" width="100" height="100">
+  </a>
+
+  <h3 align="center">Finding Similar Documents</h3>
+  <p align="center">
+    Algorithm Course Project
+    <br />
+  </p>
+</div>
+
+
+
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>📗 <b>Table of Contents</b></summary>
+  <ol>
+    <li>
+      <a href="#🔰-about-the-project"> About The Project</a>
+    </li>
+    <li><a href="#⚡-how-it-works">How it Works</a></li>
+  </ol>
+</details>
+
+
+
+<!-- ABOUT THE PROJECT -->
+## 🔰 About The Project
+Finding Similar documents using LCS algorithm. This project is written for algorithm course. More information [Report.pdf](report.pdf).
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+## ⚡ How It Works
 Install Python3 on your machine.
 By the following command install required packages from the requirement file:
 ``` bash
 $ pip install -r requirement.txt
 ```
 ### executing
-Specify your documents in the text files and use the [main.py](main.py)
+- Specify your documents in the text files and use the [main.py](main.py)
 program to compare those files. Consider these files:
+``` bash
+$ ./main.py [file1.txt] [file2.txt]
+```
+
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+## Example
 #### text 1
 ```
 Both rest of know draw fond post as.  
@@ -66,3 +120,8 @@ no it announcingmelancholy an in. Mirth learn it he given.
 Secureshy favour length all twenty denote. He felicity noan at
 packages answered opinions juvenile.
 ```
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+
+### Author
+- [Mehrdad Shahidi](https://github.com/CyberKatze)
